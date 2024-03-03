@@ -11,6 +11,10 @@ app.use(express.json());
 app.use(express.static("./public"));
 app.use("/books", bookRoute);
 
+app.use("/", (req, res)=>{
+    res.render("index.ejs");
+})
+
 app.listen(PORT, () => {
     console.log(`Server is running on PORT :- ${PORT}`.green.bold);
 })
