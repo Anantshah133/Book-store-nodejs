@@ -5,10 +5,14 @@ const router = express.Router();
 router.get("/", async (req, res) => {
     try {
         const books = await Book.find({});
-        res.render("index.ejs")
+        res.render("books.ejs")
     } catch (error) {
         console.log(`Error while fetching Books :- ${error}`);
     }
 });
+
+router.get("/add", (req, res) => {
+    res.render("addBook.ejs");
+})
 
 module.exports = router;

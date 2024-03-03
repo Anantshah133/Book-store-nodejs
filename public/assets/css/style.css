@@ -1,3 +1,7 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
 .ql-snow .ql-editor img {
     margin: 20px;
     height: 176px;
