@@ -1,4 +1,5 @@
 const express = require("express");
+const bodyParser = require("body-parser");
 require("colors");
 const { PORT } = require("./src/config/config");
 const connectDB = require("./db");
@@ -9,6 +10,7 @@ const app = express();
 app.set('view engine', 'ejs');
 app.use(express.json());
 app.use(express.static("./public"));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use("/books", bookRoute);
 
 app.get("/", (req, res)=>{

@@ -1,6 +1,6 @@
-@import 'tailwindcss/base';
+/* @import 'tailwindcss/base';
 @import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import 'tailwindcss/utilities'; */
 
 .ql-snow .ql-editor img {
     margin: 20px;
@@ -3473,6 +3473,12 @@ body.dark {
     outline-offset: 2px !important
 }
 
+.form-select option{
+    color: #000;
+    font-size: 16px;
+    font-weight: 600;
+}
+
 .form-input:focus,
 .form-multiselect:focus,
 .form-select:focus,
@@ -4570,7 +4576,7 @@ pre {
 }
 
 .mt-7 {
-    margin-top: 1.75rem
+    margin-top: 1.75rem !important
 }
 
 .mt-8 {
@@ -11504,6 +11510,10 @@ pre {
         width: 100%
     }
 
+    .md\:w-6\/12 {
+        width: 50%
+    }
+
     .md\:max-w-4xl {
         max-width: 56rem
     }
@@ -11750,6 +11760,10 @@ pre {
         width: 40%
     }
 
+    .lg\:w-6\/12 {
+        width: 50%
+    }
+
     .lg\:w-\[100px\] {
         width: 100px
     }
@@ -11936,6 +11950,10 @@ pre {
 
     .xl\:w-1\/3 {
         width: 33.333333%
+    }
+
+    .xl\:w-6\/12 {
+        width: 50%
     }
 
     .xl\:w-96 {

@@ -1,5 +1,82 @@
 <%- include('./partials/header.ejs') %>
 
-<h1>Books</h1>
-
+    <div class='p-6 w-full xl:w-6/12'>
+        <div class="panel mt-2">
+            <div class='flex items-center justify-between mb-5'>
+                <h5 class="text-2xl text-primary font-semibold dark:text-white-light">Add Book 📚</h5>
+            </div>
+            <div class="mb-5">
+                <form action="/books/add" class="space-y-5" method="post" id="mainForm">
+                    <div>
+                        <label for="name" class="text-base font-semibold">Book Name </label>
+                        <input id="name" name="name" type="text" class="form-input min-w-[20rem]" pattern="^\s*\S.*$"
+                            value="" required />
+                    </div>
+                    <div>
+                        <label for="author" class="text-base font-semibold">Author Name </label>
+                        <input id="author" name="author" type="text" class="form-input min-w-[20rem]"
+                            pattern="^\s*\S.*$" value="" required />
+                    </div>
+                    <div>
+                        <label for="category" class="text-base font-semibold">Category</label>
+                        <select class="form-select font-semibold text-gray-500" name="category" id="category" required>
+                            <option value="">Choose Category</option>
+                            <option value="fiction">Fiction</option>
+                            <option value="non-fiction">Non-Fiction</option>
+                            <option value="history">History</option>
+                            <option value="novel">Novel</option>
+                            <option value="mistery">Mistery</option>
+                            <option value="thriller">Thriller</option>
+                            <option value="romance">Romance</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="quantity" class="text-base font-semibold">Stock <span
+                                class="text-sm text-gray-400">(Quantity)</span></label>
+                        <input id="quantity" name="quantity" type="number" min="1" class="form-input min-w-[20rem]"
+                            pattern="^\s*\S.*$" value="" required />
+                    </div>
+                    <div>
+                        <label for="price" class="text-base font-semibold">Price </label>
+                        <input id="price" name="price" type="number" min="1" class="form-input min-w-[20rem]"
+                            pattern="^\s*\S.*$" value="" required />
+                    </div>
+                    <div x-data="cmplnDate">
+                        <label class="text-base font-semibold">Publish Date </label>
+                        <input x-model="date2" name="publish_date" id="publish_date" class="form-input" value=""
+                            required />
+                    </div>
+                    <div class="relative flex align-middle gap-3 mt-7">
+                        <!-- Save/Update button -->
+                        <button type="submit" name="submit" id="save" class="btn btn-primary">
+                            Submit
+                        </button>
+                        <!-- Close button -->
+                        <button type="button" class="btn btn-danger" onclick="window.location='/books'">
+                            Close
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("alpine:init", () => {
+            let todayDate = new Date();
+            let formattedToday = todayDate.toLocaleDateString('en-GB', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+            }).split('/').join('-')
+            Alpine.data("cmplnDate", () => ({
+                date2: formattedToday,
+                init() {
+                    flatpickr(document.getElementById('publish_date'), {
+                        dateFormat: 'd-m-Y',
+                        defaultDate: this.date2,
+                    })
+                }
+            }));
+        })
+    </script>
 <%- include('./partials/footer.ejs') %>

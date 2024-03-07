@@ -15,4 +15,8 @@ router.get("/add", (req, res) => {
     res.render("addBook.ejs");
 })
 
+router.post("/add", (req, res)=>{
+    console.log(req.body);
+});
+
 module.exports = router;
