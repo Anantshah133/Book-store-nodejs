@@ -13,7 +13,7 @@ const bookSchema = mongoose.Schema({
         type: String,
         required: true,
     },
-    stock: {
+    quantity: {
         type: Number,
         required: true,
     },
@@ -21,8 +21,8 @@ const bookSchema = mongoose.Schema({
         type: Number,
         required: true,
     },
-    publishDate: {
-        type: Date,
+    publish_date: {
+        type: String,
         required: true,
     },
     createdAt: {
