@@ -1342,9 +1342,9 @@ table.table-compact thead tr th {
     opacity: 1
 }
 
-.ltr .dataTable-search {
+/* .ltr .dataTable-search {
     margin-left: auto
-}
+} */
 
 .rtl .dataTable-search {
     margin-right: auto
