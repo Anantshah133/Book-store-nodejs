@@ -19,23 +19,6 @@ router.get("/add", (req, res) => {
     res.render("addBook.ejs");
 })
 
-router.post("/add", async (req, res) => {
-    try {
-        const { title, author, category, quantity, price, publish_date } = req.body;
-        const book = await Book.create({
-            title,
-            author,
-            category,
-            quantity,
-            price,
-            publish_date,
-        })
-        res.redirect("/books");
-    } catch (error) {
-        console.log(`Error in inserting book : ${error}`);
-    }
-});
-
 router.get("/edit/:id", async (req, res) => {
     const id = req.params.id;
     const book = await Book.findOne({ _id: id });
@@ -52,11 +35,30 @@ router.get("/delete/:id", async (req, res) => {
     try {
         const id = req.params.id;
         await Book.findByIdAndDelete(id);
+        res.cookie("msg", "delete");
         res.redirect("/books");
     } catch (error) {
         console.log(`Error deleting book: ${error}`);
     }
 })
+
+router.post("/add", async (req, res) => {
+    try {
+        const { title, author, category, quantity, price, publish_date } = req.body;
+        const book = await Book.create({
+            title,
+            author,
+            category,
+            quantity,
+            price,
+            publish_date,
+        })
+        res.cookie("msg", "insert");
+        res.redirect("/books");
+    } catch (error) {
+        console.log(`Error in inserting book : ${error}`);
+    }
+});
 
 router.post("/update", async (req, res) => {
     try {
@@ -66,6 +68,7 @@ router.post("/update", async (req, res) => {
             { title, author, category, quantity, price, publish_date },
             { new: true }
         );
+        res.cookie("msg", "update");
         res.redirect("/books");
     } catch (error) {
         console.log("Some error occured !");
