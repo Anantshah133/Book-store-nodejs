@@ -22,7 +22,7 @@
 </div>
 
 <script>
-    function getActions(id) {
+    function getActions(id, name) {
         return `
         <ul class="flex items-center gap-4">
             <li>
@@ -36,12 +36,29 @@
                 </a>
             </li>
             <li>
-                <a href="" class='text-xl' x-tooltip="Delete" @click="">
+                <a href="#" class='text-xl' x-tooltip="Delete" onclick="showAlert('${id}', '${name}')">
                     <i class="ri-delete-bin-line text-danger"></i>
                 </a>
             </li>
         </ul>`;
     }
+
+    async function showAlert(id, name) {
+        new window.Swal({
+            title: 'Are you sure?',
+            text: `You want to delete Book :- ${name}`,
+            showCancelButton: true,
+            confirmButtonText: 'Delete',
+            padding: '2em',
+        })
+        .then((result) => {
+            if (result.isConfirmed) {
+                var loc = `/books/delete/${id}`;
+                window.location = loc;
+            }
+        });
+    }
+
     document.addEventListener("alpine:init", ()=>{
         Alpine.data('exportTable', () => ({
             datatable: null,
@@ -57,7 +74,7 @@
                             `$${book.price}`,
                             `${book.quantity} Pcs.`,
                             book.publish_date,
-                            getActions(book._id)
+                            getActions(book._id, book.title)
                         ]);
                         this.datatable = new simpleDatatables.DataTable('#myTable', {
                         data: {

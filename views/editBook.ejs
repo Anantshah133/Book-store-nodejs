@@ -79,20 +79,5 @@
                 }
             }));
         })
-        async function showAlert(id, name) {
-            new window.Swal({
-                title: 'Are you sure?',
-                text: `You want to delete state :- ${name}`,
-                showCancelButton: true,
-                confirmButtonText: 'Delete',
-                padding: '2em',
-            }).then((result) => {
-                console.log(result)
-                if (result.isConfirmed) {
-                    var loc = "state.php?flg=del&n_stateid=" + id;
-                    window.location = loc;
-                }
-            });
-        }
     </script>
 <%- include('./partials/footer.ejs') %>

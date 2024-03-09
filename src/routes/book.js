@@ -38,14 +38,24 @@ router.post("/add", async (req, res) => {
 
 router.get("/edit/:id", async (req, res) => {
     const id = req.params.id;
-    const book = await Book.findOne({ _id: id});
+    const book = await Book.findOne({ _id: id });
     res.render("editBook.ejs", { book, mode: 'edit' })
 })
 
 router.get("/view/:id", async (req, res) => {
     const id = req.params.id;
-    const book = await Book.findOne({ _id: id});
+    const book = await Book.findOne({ _id: id });
     res.render("editBook.ejs", { book, mode: 'view' })
+})
+
+router.get("/delete/:id", async (req, res) => {
+    try {
+        const id = req.params.id;
+        await Book.findByIdAndDelete(id);
+        res.redirect("/books");
+    } catch (error) {
+        console.log(`Error deleting book: ${error}`);
+    }
 })
 
 router.post("/update", async (req, res) => {
