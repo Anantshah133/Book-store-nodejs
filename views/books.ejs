@@ -22,16 +22,16 @@
 </div>
 
 <script>
-    function getActions(id, name) {
+    function getActions(id) {
         return `
         <ul class="flex items-center gap-4">
             <li>
-                <a href="" class='text-xl' x-tooltip="View">
+                <a href="/books/view/${id}" class='text-xl' x-tooltip="View">
                     <i class="ri-eye-line text-primary"></i>
                 </a>
             </li>
             <li>
-                <a href="" class='text-xl' x-tooltip="Edit">
+                <a href="/books/edit/${id}" class='text-xl' x-tooltip="Edit">
                     <i class="ri-pencil-line text text-success"></i>
                 </a>
             </li>
@@ -49,7 +49,6 @@
                 fetch('/books/get-books')
                     .then(res => res.json())
                     .then(data => {
-                        console.log(data);
                         const tableData = data.map((book, idx)=>[
                             idx + 1,
                             book.title,
@@ -58,9 +57,8 @@
                             `$${book.price}`,
                             `${book.quantity} Pcs.`,
                             book.publish_date,
-                            getActions()
+                            getActions(book._id)
                         ]);
-                        console.log(tableData);
                         this.datatable = new simpleDatatables.DataTable('#myTable', {
                         data: {
                             headings: ['Sr.No.', 'Name', 'Author', 'Category', 'Price', 'Quantity', 'Publish Date', 'Action'],
@@ -92,7 +90,7 @@
             exportTable(eType) {
                 var data = {
                     type: eType,
-                    filename: 'state',
+                    filename: 'books',
                     download: true,
                 };
 

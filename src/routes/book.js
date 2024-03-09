@@ -6,7 +6,7 @@ router.get("/", (req, res) => {
     res.render("books.ejs");
 });
 
-router.get("/get-books", async (req, res)=>{
+router.get("/get-books", async (req, res) => {
     try {
         const books = await Book.find({});
         res.status(201).send(books);
@@ -35,5 +35,31 @@ router.post("/add", async (req, res) => {
         console.log(`Error in inserting book : ${error}`);
     }
 });
+
+router.get("/edit/:id", async (req, res) => {
+    const id = req.params.id;
+    const book = await Book.findOne({ _id: id});
+    res.render("editBook.ejs", { book, mode: 'edit' })
+})
+
+router.get("/view/:id", async (req, res) => {
+    const id = req.params.id;
+    const book = await Book.findOne({ _id: id});
+    res.render("editBook.ejs", { book, mode: 'view' })
+})
+
+router.post("/update", async (req, res) => {
+    try {
+        const { id, title, author, category, quantity, price, publish_date } = req.body;
+        let result = await Book.findOneAndUpdate(
+            { _id: id },
+            { title, author, category, quantity, price, publish_date },
+            { new: true }
+        );
+        res.redirect("/books");
+    } catch (error) {
+        console.log("Some error occured !");
+    }
+})
 
 module.exports = router;
