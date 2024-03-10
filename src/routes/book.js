@@ -1,6 +1,7 @@
 const express = require("express");
 const { Book } = require("../models/Book");
 const { upload } = require("../utils/multer");
+const { deleteFile } = require("../utils/delete-file");
 const router = express.Router();
 
 router.get("/", (req, res) => {
@@ -35,7 +36,9 @@ router.get("/view/:id", async (req, res) => {
 router.get("/delete/:id", async (req, res) => {
     try {
         const id = req.params.id;
-        await Book.findByIdAndDelete(id);
+        const bookObj = await Book.findOne({_id: id});
+        const result = await Book.findByIdAndDelete(id);
+        deleteFile(bookObj.image);
         res.cookie("msg", "delete");
         res.redirect("/books");
     } catch (error) {
@@ -45,7 +48,6 @@ router.get("/delete/:id", async (req, res) => {
 
 router.post("/add", upload.single("book-image"), async (req, res) => {
     try {
-        console.log(req.file);
         const { title, author, category, quantity, price, publish_date } = req.body;
         const book = await Book.create({
             title,
