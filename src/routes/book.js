@@ -1,5 +1,6 @@
 const express = require("express");
 const { Book } = require("../models/Book");
+const { upload } = require("../utils/multer");
 const router = express.Router();
 
 router.get("/", (req, res) => {
@@ -42,13 +43,15 @@ router.get("/delete/:id", async (req, res) => {
     }
 })
 
-router.post("/add", async (req, res) => {
+router.post("/add", upload.single("book-image"), async (req, res) => {
     try {
+        console.log(req.file);
         const { title, author, category, quantity, price, publish_date } = req.body;
         const book = await Book.create({
             title,
             author,
             category,
+            image: req.file.filename,
             quantity,
             price,
             publish_date,

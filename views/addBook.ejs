@@ -6,7 +6,7 @@
                 <h5 class="text-2xl text-primary font-semibold dark:text-white-light">Add Book 📚</h5>
             </div>
             <div class="mb-5">
-                <form action="/books/add" class="space-y-5" method="post" id="mainForm">
+                <form action="/books/add" class="space-y-5" method="post" id="mainForm" enctype="multipart/form-data">
                     <div>
                         <label for="title" class="text-base font-semibold">Book Title </label>
                         <input id="title" name="title" type="text" class="form-input min-w-[20rem]" pattern="^\s*\S.*$"
@@ -29,6 +29,12 @@
                             <option value="thriller">Thriller</option>
                             <option value="romance">Romance</option>
                         </select>
+                    </div>
+                    <div>
+                        <label for="book-image" class="text-base font-semibold">Book Image</label>
+                        <input id="book-image" name="book-image" type="file" class="form-input file:py-2 file:px-4 file:border-0 file:font-semibold p-0 file:bg-primary/90 ltr:file:mr-5 rtl:file:ml-5 file:text-white file:hover:bg-primary" required onchange="readURL(this, 'srNoImg', 'imgErr')" />
+                        <img src="" class="hidden mt-8 w-80 preview-img" alt="" id="srNoImg">
+                        <h3 id="imgErr" class="hidden error-elem">Please Select Image Files Only !</h3>
                     </div>
                     <div>
                         <label for="quantity" class="text-base font-semibold">Stock <span
@@ -61,6 +67,31 @@
         </div>
     </div>
     <script>
+
+        function readURL(input, preview, errElement) {
+            if (input.files && input.files[0]) {
+                var filename = input.files[0].name;
+                var reader = new FileReader();
+                var extn = filename.split('.').pop().toLowerCase();
+
+                var allowedExtns = ["jpg", "jpeg", "png", "bmp", "webp"];
+
+                if (allowedExtns.includes(extn)) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.querySelector('#' + preview).src = e.target.result;
+                        document.getElementById(preview).style.display = "block";
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                    document.getElementById(errElement).classList.add("hidden");
+                    document.getElementById('save').disabled = false;
+                } else {
+                    document.getElementById(preview).style.display = "none";
+                    document.getElementById(errElement).classList.remove("hidden");
+                    document.getElementById('save').disabled = true;
+                }
+            }
+        }
         document.addEventListener("alpine:init", () => {
             let todayDate = new Date();
             let formattedToday = todayDate.toLocaleDateString('en-GB', {

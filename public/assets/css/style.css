@@ -474,6 +474,13 @@
     background-color: #e92b2b
 }
 
+.error-elem{
+    color: red;
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 16px;
+}
+
 .swal2-popup .swal2-styled.swal2-confirm:focus {
     box-shadow: none !important
 }
