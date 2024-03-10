@@ -71,6 +71,7 @@
                         const tableData = data.map((book, idx)=>[
                             idx + 1,
                             book.title,
+                            `<img src="/assets/images/book-images/${book.image}" alt="Not found" width="75" />`,
                             book.author,
                             book.category,
                             `$${book.price}`,
@@ -80,7 +81,7 @@
                         ]);
                         this.datatable = new simpleDatatables.DataTable('#myTable', {
                         data: {
-                            headings: ['Sr.No.', 'Name', 'Author', 'Category', 'Price', 'Quantity', 'Publish Date', 'Action'],
+                            headings: ['Sr.No.', 'Name', 'Cover', 'Author', 'Category', 'Price', 'Quantity', 'Publish Date', 'Action'],
                             data: tableData,
                         },
                         perPage: 10,
