@@ -65,14 +65,16 @@ router.post("/add", upload.single("book-image"), async (req, res) => {
     }
 });
 
-router.post("/update", async (req, res) => {
+router.post("/update", upload.single("book-image"), async (req, res) => {
     try {
-        const { id, title, author, category, quantity, price, publish_date } = req.body;
+        const { id, title, author, category, quantity, price, publish_date, oldImage } = req.body;
         let result = await Book.findOneAndUpdate(
             { _id: id },
-            { title, author, category, quantity, price, publish_date },
+            { title, author, category, quantity, price, publish_date, image: req.file ? req.file.filename : oldImage},
             { new: true }
         );
+        if(req.file) deleteFile(oldImage);
+        
         res.cookie("msg", "update");
         res.redirect("/books");
     } catch (error) {
