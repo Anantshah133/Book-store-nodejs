@@ -37,7 +37,7 @@
                     <div>
                         <label for="price" class="text-base font-semibold">Price <span class="text-gray-400 text-sm">(In $)</span></label>
                         <input id="price" name="price" type="number" min="1" class="form-input min-w-[20rem]"
-                            pattern="^\s*\S.*$" value="<%= book.quantity %>" required onkeypress="return event.key !== 'e' && event.key !== 'E'" />
+                            pattern="^\s*\S.*$" value="<%= book.price %>" required onkeypress="return event.key !== 'e' && event.key !== 'E'" />
                     </div>
                     <div x-data="cmplnDate">
                         <label class="text-base font-semibold">Publish Date </label>
